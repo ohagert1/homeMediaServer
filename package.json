@@ -11,7 +11,7 @@
     "start-server":
       "nodemon server -e html,js,scss --ignore public --ignore client",
     "build-client-watch": "webpack -w",
-    "seed": "node scripts/seed.js"
+    "seed": "node seed.js"
   },
   "keywords": [],
   "author": "OH",

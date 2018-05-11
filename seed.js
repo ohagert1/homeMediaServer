@@ -1,5 +1,6 @@
 const fs = require('fs')
+const path = require('path')
 
-fs.readdirSync(process.env.MEDIA_PATH).forEach(file => {
+fs.readdirSync(path.join(__dirname, require('./secrets'))).forEach(file => {
   console.log(file)
 })
