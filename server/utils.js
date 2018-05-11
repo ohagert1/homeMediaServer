@@ -3,11 +3,14 @@ const adminCheck = (req, res, next) => {
   return false
 }
 
-const loginCheck = (req, res, next) => {
-  //for testing:
-  return false
-  // if (req.session.isLoggedIn) return true
-  // return false
+const loginCheck = (req, _, next) => {
+  if (!req.user || !req.user.isApproved) {
+    let err = new Error('Fuck off')
+    err.status = 403
+    throw err
+  } else {
+    next()
+  }
 }
 
 module.exports = {

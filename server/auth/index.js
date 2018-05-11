@@ -1,8 +1,7 @@
 const router = require('express').Router()
-const User = require('../db/models')
+const User = require('../db/models').User
 
 router.post('/login', (req, res, next) => {
-  console.log(req.body.email)
   User.findOne({ where: { email: req.body.email } })
     .then(user => {
       if (!user) {
@@ -45,7 +44,6 @@ router.post('/logout', (req, res) => {
 })
 
 router.get('/me', (req, res, next) => {
-  console.log('/me', req.user)
   res.json(req.user)
 })
 

@@ -1,7 +1,14 @@
 import React, { Component } from 'react'
 import { Route, Switch } from 'react-router-dom'
 //import PropTypes from 'prop-types'
-import { Login, AllMedia, Signup, Thanks } from './components'
+import {
+  Login,
+  AllMedia,
+  Signup,
+  Thanks,
+  Videos,
+  SingleVideo
+} from './components'
 import axios from 'axios'
 
 class Routes extends Component {
@@ -18,7 +25,6 @@ class Routes extends Component {
     axios
       .get('/auth/me')
       .then(me => {
-        console.log('me!', me)
         if (me) {
           this.setState({ isLoggedIn: true })
         } else {
@@ -53,12 +59,8 @@ class Routes extends Component {
         {this.state.isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
-            <Route
-              path="/media"
-              render={() => {
-                return <AllMedia videos={this.state.videos} />
-              }}
-            />
+            <Route path="/media/videos/:id" component={SingleVideo} />
+            <Route exactPath="/media/videos" component={Videos} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

@@ -6,9 +6,12 @@
   "scripts": {
     "start": "node server",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-dev": "NODE_ENV='development' npm run build-client-watch & npm run start-server",
-    "start-server": "nodemon server -e html,js,scss --ignore public --ignore client",
-    "build-client-watch": "webpack -w"
+    "start-dev":
+      "NODE_ENV='development' npm run build-client-watch & npm run start-server",
+    "start-server":
+      "nodemon server -e html,js,scss --ignore public --ignore client",
+    "build-client-watch": "webpack -w",
+    "seed": "node scripts/seed.js"
   },
   "keywords": [],
   "author": "OH",
@@ -28,8 +31,13 @@
     "pg": "^6.4.2",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
+    "react-player": "^1.5.0",
+    "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
-    "redux": "^4.0.0",
+    "redux": "^3.6.0",
+    "redux-devtools-extension": "^2.13.2",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.2.0",
     "sequelize": "^4.37.6",
     "webpack": "^4.6.0",
     "webpack-cli": "^2.0.15"

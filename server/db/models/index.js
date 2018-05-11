@@ -1,2 +1,3 @@
 const User = require('./user')
-module.exports = User
+const Video = require('./video')
+module.exports = { User, Video }

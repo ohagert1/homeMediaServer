@@ -9,7 +9,7 @@ const session = require('express-session')
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 const apiRouter = require('./api')
 const authRouter = require('./auth')
-const utils = require('./utils')
+const { loginCheck, adminCheck } = require('./utils')
 const db = require('./db')
 const sessionStore = new SequelizeStore({ db })
 const force = false
@@ -26,7 +26,16 @@ passport.deserializeUser((id, done) =>
     .catch(done)
 )
 
-const createApp = middleware => {
+console.log(
+  '!!!???',
+  path.join(
+    __dirname,
+    '../..',
+    '/Planet.Earth.Complete.Series.2006.1080p.HDDVD.x264.anoXmous/1.Planet.Earth.EP01.From.Pole.to.Pole/'
+  )
+)
+
+const createApp = () => {
   app.use(morgan('dev'))
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({ extended: true }))
@@ -51,8 +60,14 @@ const createApp = middleware => {
   )
   app.use(passport.initialize())
   app.use(passport.session())
-  app.use('/api', apiRouter)
+  app.use(
+    '/media',
+    loginCheck,
+    express.static(path.join(__dirname, process.env.MEDIA_PATH))
+  )
+  console.log('PATH', path.join(__dirname, process.env.MEDIA_PATH))
   app.use('/auth', authRouter)
+  app.use('/api', loginCheck, apiRouter)
   app.use('*', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public/index.html'))
   })
@@ -68,6 +83,6 @@ const createApp = middleware => {
   })
 }
 
-createApp(utils)
+createApp()
 
 module.exports = app

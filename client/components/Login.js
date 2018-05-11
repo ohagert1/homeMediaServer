@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 import axios from 'axios'
+import { fetchUser } from '../store'
 
 class Login extends Component {
   constructor(props) {
@@ -11,6 +13,10 @@ class Login extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
+  componentDidMount() {
+    console.log('!!', this.props)
+  }
+
   handleSubmit(event) {
     console.log(this.props)
     event.preventDefault()
@@ -18,10 +24,7 @@ class Login extends Component {
       email: event.target.email.value,
       password: event.target.password.value
     }
-    axios.post('/auth/login', user).then(loggedInUser => {
-      this.props.setUser(loggedInUser)
-      this.props.history.push('/media')
-    })
+    this.props.loginUser(user)
   }
 
   render() {
@@ -50,4 +53,10 @@ class Login extends Component {
   }
 }
 
-export default Login
+const mapDispatch = dispatch => {
+  return {
+    loginUser: user => dispatch(fetchUser(user))
+  }
+}
+
+export default connect(null, mapDispatch)(Login)
