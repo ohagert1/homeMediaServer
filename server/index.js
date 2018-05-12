@@ -1,18 +1,41 @@
 const path = require('path')
 const express = require('express')
+const passport = require('passport')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const helmet = require('helmet')
+const compression = require('compression')
+const session = require('express-session')
+const SequelizeStore = require('connect-session-sequelize')(session.Store)
 const apiRouter = require('./api')
-const utils = require('./utils')
+const authRouter = require('./auth')
+const { loginCheck, adminCheck } = require('./utils')
+const db = require('./db')
+const sessionStore = new SequelizeStore({ db })
+const force = false
+const PORT = 8080
 const app = express()
 
-// Necessary?
-//if (process.env.NODE_ENV !== 'production') require('../secrets')
+require('../secrets')
 
-const createApp = middleware => {
-  let { adminCheck } = middleware
+passport.serializeUser((user, done) => done(null, user.id))
+passport.deserializeUser((id, done) =>
+  db.models.user
+    .findById(id)
+    .then(user => done(null, user))
+    .catch(done)
+)
 
+console.log(
+  '!!!???',
+  path.join(
+    __dirname,
+    '../..',
+    '/Planet.Earth.Complete.Series.2006.1080p.HDDVD.x264.anoXmous/1.Planet.Earth.EP01.From.Pole.to.Pole/'
+  )
+)
+
+const createApp = () => {
   app.use(morgan('dev'))
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({ extended: true }))
@@ -26,26 +49,40 @@ const createApp = middleware => {
     })
   )
   app.use(helmet.noCache())
-
-  app.use('/', adminCheck, (req, res, next) => {
-    if (!adminCheck) {
-      res.sendStatus(401)
-    } else {
-      next()
-    }
-  })
-
-  app.use('/api', apiRouter)
-
+  app.use(compression())
+  app.use(
+    session({
+      secret: process.env.SESSION_SECRET || 'my best friend is Cody',
+      store: sessionStore,
+      resave: false,
+      saveUninitialized: false
+    })
+  )
+  app.use(passport.initialize())
+  app.use(passport.session())
+  app.use(
+    '/media',
+    loginCheck,
+    express.static(path.join(__dirname, process.env.MEDIA_PATH))
+  )
+  console.log('PATH', path.join(__dirname, process.env.MEDIA_PATH))
+  app.use('/auth', authRouter)
+  app.use('/api', loginCheck, apiRouter)
   app.use('*', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public/index.html'))
   })
-
   app.use((err, req, res, next) => {
     console.error(err)
     console.error(err.stack)
     res.status(err.status || 500).send(err.message || 'Internal server error.')
   })
+  db.sync({ force }).then(() => {
+    app.listen(PORT, () => {
+      console.log(`listening! on port ${PORT}`)
+    })
+  })
 }
 
-createApp(utils)
+createApp()
+
+module.exports = app
