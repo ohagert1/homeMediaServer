@@ -7,18 +7,10 @@ import { fetchUser } from '../store'
 class Login extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      securityQuestion: ''
-    }
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  componentDidMount() {
-    console.log('!!', this.props)
-  }
-
   handleSubmit(event) {
-    console.log(this.props)
     event.preventDefault()
     let user = {
       email: event.target.email.value,
@@ -53,10 +45,14 @@ class Login extends Component {
   }
 }
 
+const mapState = state => {
+  return { currentUser: state.user }
+}
+
 const mapDispatch = dispatch => {
   return {
     loginUser: user => dispatch(fetchUser(user))
   }
 }
 
-export default connect(null, mapDispatch)(Login)
+export default connect(mapState, mapDispatch)(Login)

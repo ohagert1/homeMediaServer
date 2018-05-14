@@ -1,14 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { fetchVideos, fetchCurrentVideo } from '../store'
 import { Table } from './'
 
 class Videos extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      videos: []
-    }
     this.selectVideo = this.selectVideo.bind(this)
   }
 
@@ -17,14 +15,19 @@ class Videos extends Component {
   }
 
   selectVideo(event) {
-    this.props.chooseVideo(event.target)
+    console.log(`select video: ${event.target}`)
+    this.props.history.push(event.target.id)
   }
 
   render() {
     console.log(this.props.videos)
     return (
       <div>
-        <Table media={this.props.videos} mediaPath={'/media/videos'} />
+        <Table
+          media={this.props.videos}
+          mediaPath={'/media/videos'}
+          onClick={this.props.selectVideo}
+        />
       </div>
     )
   }

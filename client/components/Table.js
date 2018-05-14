@@ -14,7 +14,12 @@ const Table = props => {
           return (
             <tr key={item.id}>
               <td>
-                <Link to={`${props.mediaPath}/${item.id}`}>{item.title}</Link>
+                <Link
+                  to={`${props.mediaPath}/${item.id}`}
+                  onClick={() => props.onClick(item)}
+                >
+                  {item.title}
+                </Link>
               </td>
             </tr>
           )

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import axios from 'axios'
+import { signUpUser } from '../store'
+import { connect } from 'react-redux'
 
 class Signup extends Component {
   constructor(props) {
@@ -16,9 +17,7 @@ class Signup extends Component {
       email: event.target.email.value,
       password: event.target.password.value
     }
-    axios.post('/auth/signup', user).then(() => {
-      this.props.history.push('/thanks')
-    })
+    this.props.signUp(user)
   }
 
   render() {
@@ -47,4 +46,10 @@ class Signup extends Component {
   }
 }
 
-export default Signup
+const mapDispatch = dispatch => {
+  return {
+    signUp: user => dispatch(signUpUser(user))
+  }
+}
+
+export default connect(null, mapDispatch)(Signup)

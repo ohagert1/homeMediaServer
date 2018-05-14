@@ -26,15 +26,6 @@ passport.deserializeUser((id, done) =>
     .catch(done)
 )
 
-console.log(
-  '!!!???',
-  path.join(
-    __dirname,
-    '../..',
-    '/Planet.Earth.Complete.Series.2006.1080p.HDDVD.x264.anoXmous/1.Planet.Earth.EP01.From.Pole.to.Pole/'
-  )
-)
-
 const createApp = () => {
   app.use(morgan('dev'))
   app.use(bodyParser.json())
