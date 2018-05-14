@@ -22,9 +22,10 @@ export const authorize = () => {
     let me = await axios.get('/auth/me')
     if (me.data) {
       dispatch(getUser(me.data))
-      history.push('/media')
+      history.push('/media/videos')
     } else {
-      throw new Error('You suck')
+      let err = new Error('Not logged in/Not Authorized')
+      console.error(err)
     }
   }
 }
@@ -33,8 +34,9 @@ export const fetchUser = user => {
   return async dispatch => {
     try {
       let currentUser = await axios.post('/auth/login', user)
+      currentUser = currentUser.data
       dispatch(getUser(currentUser))
-      history.push('/media')
+      history.push('/media/videos')
     } catch (err) {
       console.log(err)
     }
@@ -42,9 +44,11 @@ export const fetchUser = user => {
 }
 
 export const signUpUser = user => {
-  return async () => {
+  return async dispatch => {
     try {
-      await axios.post('/auth/signup', user)
+      let newUser = await axios.post('/auth/signup', user)
+      console.log(`NEW USER: ${newUser}`)
+      dispatch(getUser(newUser))
       history.push('/splash')
     } catch (err) {
       console.log(err)

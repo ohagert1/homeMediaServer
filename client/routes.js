@@ -13,20 +13,17 @@ class Routes extends Component {
   render() {
     return (
       <Switch>
-        {!Object.keys(this.props.currentUser).length && (
-          <Switch>
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
-          </Switch>
-        )}
+        <Route path="/login" component={Login} />
+        <Route path="/signup" component={Signup} />
+        <Route path="/splash" component={Splash} />
         {this.props.currentUser.isApproved && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
-            <Route path="/media/videos/:id" component={SingleVideo} />
             <Route exactPath="/media/videos" component={Videos} />
+            <Route path="/media/videos/:id" component={SingleVideo} />
           </Switch>
         )}
-        <Route path="/splash" component={Splash} />
+
         {/* Displays our Login component as a fallback */}
         <Route component={Login} />
       </Switch>

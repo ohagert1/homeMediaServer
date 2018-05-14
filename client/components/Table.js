@@ -16,7 +16,7 @@ const Table = props => {
               <td>
                 <Link
                   to={`${props.mediaPath}/${item.id}`}
-                  onClick={() => props.onClick(item)}
+                  onClick={props.clickHandle}
                 >
                   {item.title}
                 </Link>
