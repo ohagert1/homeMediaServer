@@ -40,6 +40,6 @@ readMedia(path1, movies, 'movie')
 Promise.all(
   movies.map(movie => {
     console.log(`url/title: ${movie.url}, mediaType: ${movie.mediaType}`)
-    return Video.create(movie)
+    return Video.create(movie).catch(err => console.log(err))
   })
 )
