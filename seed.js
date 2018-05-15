@@ -18,24 +18,26 @@ const files = []
 
 const path1 = path.join(__dirname, moviesPath)
 
-const readMedia = (folder, arr) => {
+const readMedia = (folder, arr, mediaType) => {
   fs.readdirSync(folder).forEach(file => {
     let filePath = path.join(folder, file)
     var stats = fs.statSync(filePath)
     if (stats.isDirectory()) {
-      readMedia(filePath, arr)
+      console.log(('FP: ', filePath))
+      readMedia(filePath, arr, mediaType)
     } else if (supportedFileTypes[path.extname(file)]) {
-      console.log(file)
-      arr.push(file)
+      let vid = Video.build({
+        url: file,
+        title: file,
+        mediaType
+      })
+      arr.push(vid)
     }
   })
 }
 
 readMedia(path1, movies)
-// Promise.all(
-//   movies.map(movie => {
-//     return Video.create({ url: movie, title: movie, mediaType: 'film' }).catch(
-//       err => console.log(err)
-//     )
-//   })
-// )
+Promise.all(
+  movies.map(movie => {
+    return Video.create(movie)
+)
