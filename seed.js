@@ -23,7 +23,6 @@ const readMedia = (folder, arr, mediaType) => {
     let filePath = path.join(folder, file)
     var stats = fs.statSync(filePath)
     if (stats.isDirectory()) {
-      console.log(('FP: ', filePath))
       readMedia(filePath, arr, mediaType)
     } else if (supportedFileTypes[path.extname(file)]) {
       let vid = Video.build({
@@ -40,6 +39,7 @@ const readMedia = (folder, arr, mediaType) => {
 readMedia(path1, movies, 'movie')
 Promise.all(
   movies.map(movie => {
+    console.log(`url/title: ${movie.url}, mediaType: ${movie.mediaType}`)
     return Video.create(movie)
   })
 )
