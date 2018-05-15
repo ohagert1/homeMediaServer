@@ -4,10 +4,7 @@ const db = require('../db')
 const Video = db.define('video', {
   url: {
     type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      isUrl: true
-    }
+    allowNull: false
   },
   image: {
     type: Sequelize.STRING,
