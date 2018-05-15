@@ -3,11 +3,16 @@ const path = require('path')
 const moviesPath = require('./secrets').moviesMedia
 const tvPath = require('./secrets').tvPath
 const Video = require('./server/db/models').Video
+const db = require('./server/db')
 
 const supportedFileTypes = {
   '.mp4': true,
   '.avi': true,
   '.mkv': true
+}
+
+const sync = async () => {
+  await db.sync({ force: true })
 }
 
 const movies = []
@@ -36,6 +41,8 @@ const readMedia = (folder, arr, mediaType) => {
   })
 }
 
+sync()
+
 readMedia(path1, movies, 'movie')
 Promise.all(
   movies.map(movie => {
@@ -43,3 +50,7 @@ Promise.all(
     return Video.create(movie).catch(err => console.log(err))
   })
 )
+
+Video.findAll()
+  .then(vids => console.log(vids))
+  .catch(console.log)
