@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const moviesPath = require('./secrets').moviesMedia
 const tvPath = require('./secrets').tvMedia
-const Video = require('./server/db/models').Video
+const { Video, User } = require('./server/db/models')
 const db = require('./server/db')
 
 const supportedFileTypes = {
@@ -41,6 +41,14 @@ readMedia(Video, path2, tv, 'tv')
 
 db
   .sync({ force: true })
+  .then(() => {
+    User.update(
+      { isAdmin: true, isAllowed: true },
+      {
+        where: { email: 'test@test.test' }
+      }
+    )
+  })
   .then(() => {
     return Promise.all(movies.map(movie => movie.save()))
   })
