@@ -1,4 +1,6 @@
 import axios from 'axios'
+import history from '../history'
+import { setError } from './'
 
 const SET_VIDEO = 'SET_VIDEO'
 const CLEAR_VIDEO = 'CLEAR_VIDEO'
@@ -18,9 +20,14 @@ export const clearVideo = () => {
 
 export const fetchCurrentVideo = videoId => {
   return async dispatch => {
-    let video = await axios.get(`/api/videos/${videoId}`)
-    console.log('video in fetch', video.data)
-    dispatch(setVideo(video.data))
+    try {
+      let video = await axios.get(`/api/videos/${videoId}`)
+      video = video.data
+      dispatch(setVideo(video))
+      history.push(`/media/videos/${videoId}`)
+    } catch (err) {
+      console.log(err)
+    }
   }
 }
 

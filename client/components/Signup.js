@@ -5,9 +5,6 @@ import { connect } from 'react-redux'
 class Signup extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      securityQuestion: ''
-    }
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
@@ -46,10 +43,16 @@ class Signup extends Component {
   }
 }
 
+const mapState = state => {
+  return {
+    currentUser: state.user
+  }
+}
+
 const mapDispatch = dispatch => {
   return {
     signUp: user => dispatch(signUpUser(user))
   }
 }
 
-export default connect(null, mapDispatch)(Signup)
+export default connect(mapState, mapDispatch)(Signup)

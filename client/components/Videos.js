@@ -15,7 +15,6 @@ class Videos extends Component {
   }
 
   selectVideo(event) {
-    console.log(`select video: ${event.target}`)
     this.props.history.push(event.target.id)
   }
 
@@ -26,7 +25,7 @@ class Videos extends Component {
         <Table
           media={this.props.videos}
           mediaPath={'/media/videos'}
-          onClick={this.props.selectVideo}
+          clickHandle={this.selectVideo}
         />
       </div>
     )

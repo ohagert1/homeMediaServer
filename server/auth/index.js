@@ -28,13 +28,17 @@ router.post('/signup', (req, res, next) => {
   User.create({
     email: req.body.email,
     password: req.body.password
-  }).catch(err => {
-    if (err.name === 'SequelizeUniqueConstraintError') {
-      res.status(401).send('User already exists')
-    } else {
-      next(err)
-    }
   })
+    .then(user => {
+      res.json(user)
+    })
+    .catch(err => {
+      if (err.name === 'SequelizeUniqueConstraintError') {
+        res.status(401).send('User already exists')
+      } else {
+        next(err)
+      }
+    })
 })
 
 router.post('/logout', (req, res) => {
