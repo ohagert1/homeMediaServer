@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const moviesPath = require('./secrets').moviesMedia
-const tvPath = require('./secrets').tvPath
+const tvPath = require('./secrets').tvMedia
 const Video = require('./server/db/models').Video
 const db = require('./server/db')
 
@@ -18,15 +18,16 @@ const tv = []
 const files = []
 
 const path1 = path.join(__dirname, moviesPath)
+const path2 = path.join(__dirname, tvPath)
 
-const readMedia = (folder, arr, mediaType) => {
+const readMedia = (table, folder, arr, mediaType) => {
   fs.readdirSync(folder).forEach(file => {
     let filePath = path.join(folder, file)
     var stats = fs.statSync(filePath)
     if (stats.isDirectory()) {
       readMedia(filePath, arr, mediaType)
     } else if (supportedFileTypes[path.extname(file)]) {
-      let vid = Video.build({
+      let vid = table.build({
         url: file,
         title: file.slice(0, file.lastIndexOf('.')),
         mediaType
@@ -39,8 +40,9 @@ const readMedia = (folder, arr, mediaType) => {
 
 const sync = async () => {
   await db.sync({ force: true })
-  readMedia(path1, movies, 'film')
+  readMedia(Video, path1, movies, 'film')
+  readMedia(Video, path2, tv, 'tv')
   movies.forEach(movie => movie.save().catch(console.log))
 }
 
-sync()
+sync().then(db.close())
