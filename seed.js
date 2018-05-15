@@ -11,10 +11,6 @@ const supportedFileTypes = {
   '.mkv': true
 }
 
-const sync = async () => {
-  await db.sync({ force: true })
-}
-
 const movies = []
 
 const tv = []
@@ -41,7 +37,11 @@ const readMedia = (folder, arr, mediaType) => {
   })
 }
 
+const sync = async () => {
+  await db.sync({ force: true })
+  readMedia(path1, movies, 'film')
+}
+
 sync()
 
-readMedia(path1, movies, 'film')
 movies.forEach(movie => movie.save().catch(console.log))
