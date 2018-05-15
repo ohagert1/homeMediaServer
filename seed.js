@@ -36,10 +36,14 @@ const readMedia = (folder, arr, mediaType) => {
   })
 }
 
-readMedia(path1, movies, 'movie')
-Promise.all(
-  movies.map(movie => {
-    console.log(`url/title: ${movie.url}, mediaType: ${movie.mediaType}`)
-    return Video.create(movie).catch(err => console.log(err))
-  })
-)
+// readMedia(path1, movies, 'movie')
+// Promise.all(
+//   movies.map(movie => {
+//     console.log(`url/title: ${movie.url}, mediaType: ${movie.mediaType}`)
+//     return Video.create(movie).catch(err => console.log(err))
+//   })
+// )
+
+Video.findAll()
+  .then(vids => console.log(vids))
+  .catch(console.log)
