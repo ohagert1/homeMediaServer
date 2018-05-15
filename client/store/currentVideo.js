@@ -27,6 +27,7 @@ export const fetchCurrentVideo = videoId => {
       history.push(`/media/videos/${videoId}`)
     } catch (err) {
       console.log(err)
+      dispatch(setError(err))
     }
   }
 }
