@@ -36,13 +36,6 @@ const readMedia = (table, folder, arr, mediaType) => {
   })
 }
 
-const sync = async () => {
-  await db.sync({ force: true })
-
-  Promise.all(movies.map(movie => movie.save()).catch(console.log))
-  Promise.all(tv.map(movie => movie.save()).catch(console.log))
-}
-
 readMedia(Video, path1, movies, 'film')
 readMedia(Video, path2, tv, 'tv')
 
