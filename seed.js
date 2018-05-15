@@ -31,7 +31,7 @@ const readMedia = (folder, arr, mediaType) => {
         title: file,
         mediaType
       })
-      console.log(vid)
+      console.log(`url/title: ${file}, mediaType: ${mediaType}`)
       arr.push(vid)
     }
   })
