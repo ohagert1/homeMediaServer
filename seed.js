@@ -15,8 +15,6 @@ const movies = []
 
 const tv = []
 
-const files = []
-
 const path1 = path.join(__dirname, moviesPath)
 const path2 = path.join(__dirname, tvPath)
 
@@ -40,10 +38,22 @@ const readMedia = (table, folder, arr, mediaType) => {
 
 const sync = async () => {
   await db.sync({ force: true })
-  readMedia(Video, path1, movies, 'film')
-  readMedia(Video, path2, tv, 'tv')
-  await Promise.all(movies.map(movie => movie.save()).catch(console.log))
-  await Promise.all(tv.map(movie => movie.save()).catch(console.log))
+
+  Promise.all(movies.map(movie => movie.save()).catch(console.log))
+  Promise.all(tv.map(movie => movie.save()).catch(console.log))
 }
 
-sync().then(db.close)
+readMedia(Video, path1, movies, 'film')
+readMedia(Video, path2, tv, 'tv')
+
+db
+  .sync({ force: true })
+  .then(() => {
+    return Promise.all(movies.map(movie => movie.save()))
+  })
+  .then(() => {
+    return Promise.all(tv.map(show => show.save()))
+  })
+  .catch(err => console.log(err))
+
+sync()
