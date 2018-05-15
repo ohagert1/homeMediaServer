@@ -36,7 +36,7 @@ const readMedia = (folder, arr, mediaType) => {
   })
 }
 
-readMedia(path1, movies)
+readMedia(path1, movies, 'movie')
 Promise.all(
   movies.map(movie => {
     return Video.create(movie)
