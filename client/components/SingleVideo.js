@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchCurrentVideo } from '../store'
+import { fetchCurrentVideo, clearVideo } from '../store'
 import ReactPlayer from 'react-player'
 
 class SingleVideo extends Component {
@@ -9,19 +9,19 @@ class SingleVideo extends Component {
     this.props.chooseVideo(videoId)
   }
 
+  componentWillUnmount() {
+    this.props.removeVideo()
+  }
+
   render() {
-    console.log('Single Video', this.props.currentVideo.url)
     return (
       <div>
         {this.props.currentVideo.url && (
           <ReactPlayer
-            url={
-              '/media/Planet.Earth.01.From.Pole.to.Pole.2006.1080p.HDDVD.x264.anoXmous_.mp4'
-            }
+            url={`/media/${this.props.currentVideo.url}`}
             controls={true}
           />
         )}
-        <span>WHOOPS</span>
       </div>
     )
   }
@@ -35,7 +35,8 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    chooseVideo: videoId => dispatch(fetchCurrentVideo(videoId))
+    chooseVideo: videoId => dispatch(fetchCurrentVideo(videoId)),
+    removeVideo: () => dispatch(clearVideo())
   }
 }
 

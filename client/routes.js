@@ -1,68 +1,32 @@
 import React, { Component } from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { withRouter, Route, Switch } from 'react-router-dom'
+import { connect } from 'react-redux'
 //import PropTypes from 'prop-types'
-import {
-  Login,
-  AllMedia,
-  Signup,
-  Thanks,
-  Videos,
-  SingleVideo
-} from './components'
-import axios from 'axios'
+import { Login, Signup, Splash, Videos, SingleVideo } from './components'
+import { authorize } from './store'
 
 class Routes extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      videos: [],
-      isLoggedIn: false
-    }
-    this.setUser = this.setUser.bind(this)
-  }
-
   componentDidMount() {
-    axios
-      .get('/auth/me')
-      .then(me => {
-        if (me) {
-          this.setState({ isLoggedIn: true })
-        } else {
-          throw new Error('You suck')
-        }
-      })
-      .then(() => {
-        axios
-          .get('/api/videos')
-          .then(videos => {
-            this.setState({ videos })
-          })
-          .catch(err => console.log(err))
-      })
-      .catch(err => console.log(err))
-  }
-
-  setUser(user) {
-    this.setState({ user })
+    this.props.setCurrentUser()
   }
 
   render() {
     return (
       <Switch>
-        {/* Routes placed here are available to all visitors */}
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
-        <Route
-          path="/thanks"
-          render={props => <Thanks {...props} setUser={this.setUser} />}
-        />
-        {this.state.isLoggedIn && (
+        {!Object.keys(this.props.currentUser).length && (
+          <Switch>
+            <Route path="/login" component={Login} />
+            <Route path="/signup" component={Signup} />
+          </Switch>
+        )}
+        {this.props.currentUser.isApproved && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/media/videos/:id" component={SingleVideo} />
             <Route exactPath="/media/videos" component={Videos} />
           </Switch>
         )}
+        <Route path="/splash" component={Splash} />
         {/* Displays our Login component as a fallback */}
         <Route component={Login} />
       </Switch>
@@ -70,4 +34,16 @@ class Routes extends Component {
   }
 }
 
-export default Routes
+const mapState = state => {
+  return {
+    currentUser: state.user
+  }
+}
+
+const mapDispatch = dispatch => {
+  return {
+    setCurrentUser: () => dispatch(authorize())
+  }
+}
+
+export default withRouter(connect(mapState, mapDispatch)(Routes))

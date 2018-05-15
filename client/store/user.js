@@ -17,6 +17,18 @@ const clearUser = () => {
   }
 }
 
+export const authorize = () => {
+  return async dispatch => {
+    let me = await axios.get('/auth/me')
+    if (me.data) {
+      dispatch(getUser(me.data))
+      history.push('/media')
+    } else {
+      throw new Error('You suck')
+    }
+  }
+}
+
 export const fetchUser = user => {
   return async dispatch => {
     try {
@@ -29,10 +41,21 @@ export const fetchUser = user => {
   }
 }
 
+export const signUpUser = user => {
+  return async () => {
+    try {
+      await axios.post('/auth/signup', user)
+      history.push('/splash')
+    } catch (err) {
+      console.log(err)
+    }
+  }
+}
+
 export const logoutCurrentUser = () => {
   return async dispatch => {
     try {
-      await axios.post('/logout')
+      await axios.post('/auth/logout')
       dispatch(clearUser())
       history.push('/')
     } catch (err) {
