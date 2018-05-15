@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const moviesPath = require('./secrets').moviesPath
+const moviesPath = require('./secrets').moviesMedia
 const tvPath = require('./secrets').tvPath
 const Video = require('./server/db/models').Video
 const db = require('./server/db')
