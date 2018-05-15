@@ -44,8 +44,4 @@ const readMedia = (folder, arr, mediaType) => {
 //sync()
 
 readMedia(path1, movies, 'movie')
-movies.forEach(movie =>
-  console.log(
-    `url: ${movie.url} \ntitle: ${movie.title} \nmediaType: ${movie.mediaType}`
-  )
-)
+movies.forEach(movie => movie.save())
