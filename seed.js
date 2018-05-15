@@ -42,7 +42,8 @@ const sync = async () => {
   await db.sync({ force: true })
   readMedia(Video, path1, movies, 'film')
   readMedia(Video, path2, tv, 'tv')
-  movies.forEach(movie => movie.save().catch(console.log))
+  await Promise.all(movies.map(movie => movie.save()).catch(console.log))
+  await Promise.all(tv.map(movie => movie.save()).catch(console.log))
 }
 
 sync().then(db.close())
