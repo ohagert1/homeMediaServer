@@ -14,6 +14,7 @@ class SingleVideo extends Component {
   }
 
   render() {
+    console.log('PLAYER', this.props.currentVideo.url)
     return (
       <div>
         {this.props.currentVideo.url && (

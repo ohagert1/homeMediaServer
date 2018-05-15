@@ -2,12 +2,12 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 const ErrorDisplay = props => {
-  return
+  return <h1>{props.error.message}</h1>
 }
 
 const mapState = state => {
   return {
-    currentUser: state.user
+    error: state.error
   }
 }
 
