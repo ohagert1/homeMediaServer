@@ -38,8 +38,10 @@ const readMedia = (table, folder, arr, mediaType) => {
   })
 }
 
-readMedia(Video, path1, movies, 'film')
-readMedia(Video, path2, tv, 'tv')
+// readMedia(Video, path1, movies, 'film')
+// readMedia(Video, path2, tv, 'tv')
+
+readMedia(Video, path0, movies, 'film')
 
 db
   .sync()
@@ -54,7 +56,7 @@ db
   .then(() => {
     return Promise.all(movies.map(movie => movie.save()))
   })
-  .then(() => {
-    return Promise.all(tv.map(show => show.save()))
-  })
+  // .then(() => {
+  //   return Promise.all(tv.map(show => show.save()))
+  // })
   .catch(err => console.log(err))

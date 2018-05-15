@@ -19,11 +19,10 @@ class Routes extends Component {
         {this.props.currentUser.isApproved && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
-            <Route exactPath="/media/videos" component={Videos} />
             <Route path="/media/videos/:id" component={SingleVideo} />
+            <Route exactPath="/media/videos" component={Videos} />
           </Switch>
         )}
-
         {/* Displays our Login component as a fallback */}
         <Route component={Login} />
       </Switch>
