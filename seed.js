@@ -43,7 +43,7 @@ db
   .sync()
   .then(() => {
     return User.update(
-      { isAdmin: true, isApproved true },
+      { isAdmin: true, isApproved: true },
       {
         where: { email: 'test@test.test' }
       }
