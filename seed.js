@@ -40,9 +40,9 @@ readMedia(Video, path1, movies, 'film')
 readMedia(Video, path2, tv, 'tv')
 
 db
-  .sync({ force: true })
+  .sync()
   .then(() => {
-    User.update(
+    return User.update(
       { isAdmin: true, isAllowed: true },
       {
         where: { email: 'test@test.test' }
