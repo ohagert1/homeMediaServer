@@ -40,4 +40,5 @@ readMedia(path1, movies)
 Promise.all(
   movies.map(movie => {
     return Video.create(movie)
+  })
 )
