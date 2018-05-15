@@ -56,5 +56,3 @@ db
     return Promise.all(tv.map(show => show.save()))
   })
   .catch(err => console.log(err))
-
-sync()
