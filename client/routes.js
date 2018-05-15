@@ -33,7 +33,8 @@ class Routes extends Component {
 
 const mapState = state => {
   return {
-    currentUser: state.user
+    currentUser: state.user,
+    error: state.error
   }
 }
 

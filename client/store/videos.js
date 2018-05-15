@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { setError } from './'
 
 const GET_VIDEOS = 'GET_VIDEOS'
 
@@ -11,9 +12,14 @@ const getVideos = videos => {
 
 export const fetchVideos = options => {
   return async dispatch => {
-    let videos = await axios.get('/api/videos')
-    console.log('vd', videos)
-    dispatch(getVideos(videos.data))
+    try {
+      let videos = await axios.get('/api/videos')
+      console.log('vd', videos)
+      dispatch(getVideos(videos.data))
+    } catch (err) {
+      console.log(err)
+      dispatch(setError(err))
+    }
   }
 }
 

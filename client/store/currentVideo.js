@@ -1,5 +1,6 @@
 import axios from 'axios'
 import history from '../history'
+import { setError } from './'
 
 const SET_VIDEO = 'SET_VIDEO'
 const CLEAR_VIDEO = 'CLEAR_VIDEO'

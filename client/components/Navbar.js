@@ -24,7 +24,7 @@ const Navbar = props => {
 }
 
 const mapState = state => {
-  return { currentUser: state.user }
+  return { currentUser: state.user, error: state.error }
 }
 
 const mapDispatch = dispatch => {

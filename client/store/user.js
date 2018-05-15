@@ -1,5 +1,7 @@
 import axios from 'axios'
 import history from '../history'
+import { setError } from './'
+import { isError } from 'util'
 
 const GET_USER = 'GET_USER'
 const CLEAR_USER = 'CLEAR_USER'
@@ -25,7 +27,8 @@ export const authorize = () => {
       history.push('/media/videos')
     } else {
       let err = new Error('Not logged in/Not Authorized')
-      console.error(err)
+      console.log(err)
+      dispatch(setError(err))
     }
   }
 }
@@ -39,6 +42,7 @@ export const fetchUser = user => {
       history.push('/media/videos')
     } catch (err) {
       console.log(err)
+      dispatch(setError(err))
     }
   }
 }
@@ -52,6 +56,7 @@ export const signUpUser = user => {
       history.push('/splash')
     } catch (err) {
       console.log(err)
+      dispatch(setError(err))
     }
   }
 }
@@ -64,6 +69,7 @@ export const logoutCurrentUser = () => {
       history.push('/')
     } catch (err) {
       console.log(err)
+      dispatch(setError(err))
     }
   }
 }
