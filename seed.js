@@ -32,7 +32,7 @@ const readMedia = (folder, arr, mediaType) => {
     } else if (supportedFileTypes[path.extname(file)]) {
       let vid = Video.build({
         url: file,
-        title: file,
+        title: file.slice(0, file.lastIndexOf('.')),
         mediaType
       })
       console.log(`url/title: ${file}, mediaType: ${mediaType}`)
