@@ -25,6 +25,7 @@ const readMedia = (folder, arr) => {
     if (stats.isDirectory()) {
       readMedia(filePath, arr)
     } else if (supportedFileTypes[path.extname(file)]) {
+      console.log(file)
       arr.push(file)
     }
   })
