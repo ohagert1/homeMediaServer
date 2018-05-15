@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const moviesPath = require('./secrets').moviesMedia
+const moviesPath = require('./secrets').moviesPath
 const tvPath = require('./secrets').tvPath
 const Video = require('./server/db/models').Video
 const db = require('./server/db')
@@ -41,16 +41,11 @@ const readMedia = (folder, arr, mediaType) => {
   })
 }
 
-sync()
+//sync()
 
 readMedia(path1, movies, 'movie')
-Promise.all(
-  movies.map(movie => {
-    console.log(`url/title: ${movie.url}, mediaType: ${movie.mediaType}`)
-    return Video.create(movie).catch(err => console.log(err))
-  })
+movies.forEach(movie =>
+  console.log(
+    `url: ${movie.url} \ntitle: ${movie.title} \nmediaType: ${movie.mediaType}`
+  )
 )
-
-Video.findAll()
-  .then(vids => console.log(vids))
-  .catch(console.log)
