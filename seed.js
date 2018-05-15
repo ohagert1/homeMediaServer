@@ -46,4 +46,4 @@ const sync = async () => {
   await Promise.all(tv.map(movie => movie.save()).catch(console.log))
 }
 
-sync().then(db.close())
+sync().then(db.close)
