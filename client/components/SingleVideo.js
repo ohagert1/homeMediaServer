@@ -21,13 +21,7 @@ class SingleVideo extends Component {
       <div>
         {this.props.currentVideo.url && (
           <ReactPlayer
-            url={`/media/${
-              pathModifier
-                ? this.props.currentVideo.mediaType === 'film'
-                  ? 'movies/'
-                  : 'tv/'
-                : ''
-            }${this.props.currentVideo.url}`}
+            url={`/media/movies/${this.props.currentVideo.url}`}
             controls={true}
           />
         )}
