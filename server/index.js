@@ -49,6 +49,7 @@ const createApp = () => {
       saveUninitialized: false
     })
   )
+  console.log(path.join(__dirname, process.env.MEDIA_PATH))
   app.use(passport.initialize())
   app.use(passport.session())
   app.use(
