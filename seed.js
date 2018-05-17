@@ -27,7 +27,6 @@ const readMedia = (table, folder, arr, folderPath = '') => {
         title: file.slice(0, file.lastIndexOf('.')),
         mediaType: file.includes('tv') ? 'tv' : 'film'
       })
-      console.log(`url/title: ${vid.url}, mediaType: ${vid.mediaType}`)
       arr.push(vid)
     }
   })
