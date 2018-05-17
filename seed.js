@@ -34,7 +34,7 @@ const readMedia = (table, folder, arr, folderPath = '') => {
 readMedia(Video, pathToMedia, media)
 
 db
-  .sync()
+  .sync({ force: true })
   .then(() => {
     return User.update(
       { isAdmin: true, isApproved: true },
@@ -46,4 +46,5 @@ db
   .then(() => {
     return Promise.all(media.map(movie => movie.save()))
   })
+  .then(() => db.close())
   .catch(err => console.log(err))
