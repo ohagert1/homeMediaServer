@@ -2,12 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchCurrentVideo, clearVideo } from '../store'
 import ReactPlayer from 'react-player'
-const pathModifier = process.env.NODE_ENV === 'production'
 
 class SingleVideo extends Component {
   componentDidMount() {
     let videoId = this.props.match.params.id
-    console.log('id:', videoId)
     this.props.chooseVideo(videoId)
   }
 
@@ -16,18 +14,14 @@ class SingleVideo extends Component {
   }
 
   render() {
-    console.log('PLAYER', this.props.currentVideo.url)
+    let { currentVideo } = this.props
     return (
       <div>
         {this.props.currentVideo.url && (
           <ReactPlayer
             url={`/media/${
-              pathModifier
-                ? this.props.currentVideo.mediaType === 'film'
-                  ? 'movies/'
-                  : 'tv/'
-                : ''
-            }${this.props.currentVideo.url}`}
+              currentVideo.mediaType === 'film' ? 'movies' : 'tv'
+            }/${currentVideo.url}`}
             controls={true}
           />
         )}

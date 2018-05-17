@@ -56,7 +56,6 @@ const createApp = () => {
     loginCheck,
     express.static(path.join(__dirname, process.env.MEDIA_PATH))
   )
-  console.log('PATH', path.join(__dirname, process.env.MEDIA_PATH))
   app.use('/auth', authRouter)
   app.use('/api', loginCheck, apiRouter)
   app.use('*', (req, res) => {
