@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const { mediaPath } = require('./secrets')
+const { mediaPath, seedUser } = require('./secrets')
 const { Video, User } = require('./server/db/models')
 const db = require('./server/db')
 
@@ -36,12 +36,7 @@ readMedia(Video, pathToMedia, media)
 db
   .sync({ force: true })
   .then(() => {
-    return User.update(
-      { isAdmin: true, isApproved: true },
-      {
-        where: { email: 'test@test.test' }
-      }
-    )
+    return User.create(seedUser)
   })
   .then(() => {
     return Promise.all(media.map(movie => movie.save()))
