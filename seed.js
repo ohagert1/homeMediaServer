@@ -17,7 +17,6 @@ const pathToMedia = path.join(__dirname, mediaPath)
 const readMedia = (table, folder, arr, folderPath = '') => {
   fs.readdirSync(folder).forEach(file => {
     let filePath = path.join(folder, file)
-    console.log(`FILE PATH: ${folderPath}`)
     var stats = fs.statSync(filePath)
     if (stats.isDirectory()) {
       readMedia(table, filePath, arr, folderPath + '/' + file)
