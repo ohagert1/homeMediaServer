@@ -21,7 +21,7 @@ class SingleVideo extends Component {
       <div>
         {this.props.currentVideo.url && (
           <ReactPlayer
-            url="Clerks.avi"
+            url="/media/newtest2.mp4"
             //url={`/media/movies/${this.props.currentVideo.url}`}
             controls={true}
           />
