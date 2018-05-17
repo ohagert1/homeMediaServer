@@ -1,8 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const localPath = require('./secrets').mediaDev
-const moviesPath = require('./secrets').moviesMedia
-const tvPath = require('./secrets').tvMedia
+const { mediaPath } = require('./secrets')
 const { Video, User } = require('./server/db/models')
 const db = require('./server/db')
 
@@ -20,17 +18,17 @@ const path0 = path.join(__dirname, localPath)
 const path1 = path.join(__dirname, moviesPath)
 const path2 = path.join(__dirname, tvPath)
 
-const readMedia = (table, folder, arr, mediaType) => {
+const readMedia = (table, folder, arr, mediaType, folderPath = '') => {
   fs.readdirSync(folder).forEach(file => {
     let filePath = path.join(folder, file)
     var stats = fs.statSync(filePath)
     if (stats.isDirectory()) {
-      readMedia(table, filePath, arr, mediaType)
+      readMedia(table, filePath, arr, mediaType, filePath)
     } else if (supportedFileTypes[path.extname(file)]) {
       let vid = table.build({
-        url: file,
+        url: `${folderPath.length ? folderPath + '/' : ''}${file}`,
         title: file.slice(0, file.lastIndexOf('.')),
-        mediaType
+        mediaType: file.includes('tv') ? 'tv' : 'film'
       })
       console.log(`url/title: ${file}, mediaType: ${mediaType}`)
       arr.push(vid)
