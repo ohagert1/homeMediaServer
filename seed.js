@@ -1,8 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const localPath = require('./secrets').mediaDev
-const moviesPath = require('./secrets').moviesMedia
-const tvPath = require('./secrets').tvMedia
+const { mediaPath } = require('./secrets')
 const { Video, User } = require('./server/db/models')
 const db = require('./server/db')
 
