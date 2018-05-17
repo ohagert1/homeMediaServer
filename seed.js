@@ -19,7 +19,12 @@ const readMedia = (table, folder, arr, folderPath = '') => {
     let filePath = path.join(folder, file)
     var stats = fs.statSync(filePath)
     if (stats.isDirectory()) {
-      readMedia(table, filePath, arr, folderPath + '/' + file)
+      readMedia(
+        table,
+        filePath,
+        arr,
+        folderPath.length ? folderPath + '/' + file : file
+      )
     } else if (supportedFileTypes[path.extname(file)]) {
       let vid = table.build({
         url: `${folderPath.length ? folderPath + '/' : ''}${file}`,
