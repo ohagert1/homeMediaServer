@@ -9,25 +9,17 @@ class SingleVideo extends Component {
     let videoId = this.props.match.params.id
     console.log('id:', videoId)
     this.props.chooseVideo(videoId)
-    this.ref = this.ref.bind(this)
   }
 
   componentWillUnmount() {
     this.props.removeVideo()
   }
 
-  ref(player) {
-    this.player = player
-  }
-
   render() {
-    console.log('DUR: ', this.player.getDuration())
     return (
       <div>
         {this.props.currentVideo.url && (
           <ReactPlayer
-            onReady={() => console.log('DURRRR: ', this.player.getDuration())}
-            ref={this.ref}
             url="/media/newtest2.mp4"
             //url={`/media/movies/${this.props.currentVideo.url}`}
             controls={true}
