@@ -17,6 +17,7 @@ const pathToMedia = path.join(__dirname, mediaPath)
 const readMedia = (table, folder, arr, folderPath = '') => {
   fs.readdirSync(folder).forEach(file => {
     let filePath = path.join(folder, file)
+    console.log(`FILE PATH: ${filePath}`)
     var stats = fs.statSync(filePath)
     if (stats.isDirectory()) {
       readMedia(table, filePath, arr, file)
@@ -31,9 +32,6 @@ const readMedia = (table, folder, arr, folderPath = '') => {
     }
   })
 }
-
-// readMedia(Video, path1, movies, 'film')
-// readMedia(Video, path2, tv, 'tv')
 
 readMedia(Video, pathToMedia, media)
 
@@ -50,7 +48,4 @@ db
   .then(() => {
     return Promise.all(media.map(movie => movie.save()))
   })
-  // .then(() => {
-  //   return Promise.all(tv.map(show => show.save()))
-  // })
   .catch(err => console.log(err))
