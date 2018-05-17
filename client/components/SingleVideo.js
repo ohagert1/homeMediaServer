@@ -16,7 +16,7 @@ class SingleVideo extends Component {
   }
 
   render() {
-    console.log('PLAY: ', ReactPlayer.canPlay('/media/newtest2.mp4'))
+    console.log('DUR: ', ReactPlayer.getDuration())
     return (
       <div>
         {this.props.currentVideo.url && (
