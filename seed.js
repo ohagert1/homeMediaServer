@@ -14,9 +14,7 @@ const movies = []
 
 const tv = []
 
-const path0 = path.join(__dirname, localPath)
-const path1 = path.join(__dirname, moviesPath)
-const path2 = path.join(__dirname, tvPath)
+const pathToMedia = path.join(__dirname, mediaPath)
 
 const readMedia = (table, folder, arr, mediaType, folderPath = '') => {
   fs.readdirSync(folder).forEach(file => {
@@ -39,7 +37,7 @@ const readMedia = (table, folder, arr, mediaType, folderPath = '') => {
 // readMedia(Video, path1, movies, 'film')
 // readMedia(Video, path2, tv, 'tv')
 
-readMedia(Video, path0, movies, 'film')
+readMedia(Video, pathToMedia, movies, 'film')
 
 db
   .sync()
