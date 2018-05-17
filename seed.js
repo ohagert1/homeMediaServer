@@ -19,7 +19,7 @@ const readMedia = (table, folder, arr, folderPath = '') => {
     let filePath = path.join(folder, file)
     var stats = fs.statSync(filePath)
     if (stats.isDirectory()) {
-      readMedia(table, filePath, arr, filePath)
+      readMedia(table, filePath, arr, file)
     } else if (supportedFileTypes[path.extname(file)]) {
       let vid = table.build({
         url: `${folderPath.length ? folderPath + '/' : ''}${file}`,
@@ -48,7 +48,7 @@ db
     )
   })
   .then(() => {
-    return Promise.all(movies.map(movie => movie.save()))
+    return Promise.all(media.map(movie => movie.save()))
   })
   // .then(() => {
   //   return Promise.all(tv.map(show => show.save()))
