@@ -49,15 +49,13 @@ const createApp = () => {
       saveUninitialized: false
     })
   )
-  console.log('!PATH!', path.join(__dirname, process.env.TEST_PATH))
   app.use(passport.initialize())
   app.use(passport.session())
   app.use(
     '/media',
     loginCheck,
-    express.static(path.join(__dirname, process.env.TEST_PATH))
+    express.static(path.join(__dirname, process.env.MEDIA_PATH))
   )
-  console.log('PATH', path.join(__dirname, process.env.MEDIA_PATH))
   app.use('/auth', authRouter)
   app.use('/api', loginCheck, apiRouter)
   app.use('*', (req, res) => {

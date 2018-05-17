@@ -7,7 +7,6 @@ const pathModifier = process.env.NODE_ENV === 'production'
 class SingleVideo extends Component {
   componentDidMount() {
     let videoId = this.props.match.params.id
-    console.log('id:', videoId)
     this.props.chooseVideo(videoId)
   }
 
@@ -20,8 +19,7 @@ class SingleVideo extends Component {
       <div>
         {this.props.currentVideo.url && (
           <ReactPlayer
-            url="/media/newtest2.mp4"
-            //url={`/media/movies/${this.props.currentVideo.url}`}
+            url={`/media/movies/${this.props.currentVideo.url}`}
             controls={true}
           />
         )}
