@@ -2,24 +2,30 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { logoutCurrentUser } from '../store'
+import { Button, Navbar, NavItem, Nav } from 'react-bootstrap'
 
-const Navbar = props => {
+const NavBar = props => {
   return (
-    <span>
-      <h2>user: {props.currentUser.email || 'Not Logged In'}</h2>
-      {props.currentUser.isApproved ? (
-        <div>
-          <Link to="" onClick={props.logoutUser}>
+    <Navbar inverse>
+      <Navbar.Header>
+        <Navbar.Brand pullLeft>Ras Media</Navbar.Brand>
+      </Navbar.Header>
+      <Nav pullRight>
+        <Navbar.Text>
+          user: {props.currentUser.email || 'Not Logged In'}
+        </Navbar.Text>
+        {props.currentUser.isApproved ? (
+          <NavItem eventKey={1} onClick={props.logoutUser}>
             Logout
-          </Link>
-        </div>
-      ) : (
-        <div>
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Signup</Link>
-        </div>
-      )}
-    </span>
+          </NavItem>
+        ) : (
+          <Nav>
+            <NavItem href="/login">Log In</NavItem>
+            <NavItem href="/signup">Sign Up</NavItem>
+          </Nav>
+        )}
+      </Nav>
+    </Navbar>
   )
 }
 
@@ -33,4 +39,4 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(mapState, mapDispatch)(Navbar)
+export default connect(mapState, mapDispatch)(NavBar)
