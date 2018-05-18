@@ -1,12 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { Table as BsTable } from 'react-bootstrap'
 
 const Table = props => {
   return (
-    <table>
+    <BsTable>
       <thead>
         <tr>
-          <th>title</th>
+          <th>Title</th>
+          <th>Description</th>
         </tr>
       </thead>
       <tbody>
@@ -21,11 +23,12 @@ const Table = props => {
                   {item.title}
                 </Link>
               </td>
+              <td>{item.description}</td>
             </tr>
           )
         })}
       </tbody>
-    </table>
+    </BsTable>
   )
 }
 

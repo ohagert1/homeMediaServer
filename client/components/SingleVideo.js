@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchCurrentVideo, clearVideo } from '../store'
 import ReactPlayer from 'react-player'
+import { PageHeader } from 'react-bootstrap'
 
 class SingleVideo extends Component {
   componentDidMount() {
@@ -16,9 +17,9 @@ class SingleVideo extends Component {
   render() {
     let { currentVideo } = this.props
     return (
-      <div>
+      <div className="row">
         {this.props.currentVideo.url && (
-          <div>
+          <div className="col-lg-4 col-lg-offset-3">
             <h3>{currentVideo.title}</h3>
             <ReactPlayer url={`/media/${currentVideo.url}`} controls={true} />
             <h5>{currentVideo.description}</h5>

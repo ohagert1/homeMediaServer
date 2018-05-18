@@ -1,30 +1,38 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 import { logoutCurrentUser } from '../store'
-import { Button, Navbar, NavItem, Nav } from 'react-bootstrap'
+import { Navbar, NavItem, Nav } from 'react-bootstrap'
 
 const NavBar = props => {
   return (
     <Navbar inverse>
       <Navbar.Header>
-        <Navbar.Brand pullLeft>Ras Media</Navbar.Brand>
+        <Navbar.Brand>
+          <a href="">Ras Media</a>
+        </Navbar.Brand>
+        <Navbar.Toggle />
       </Navbar.Header>
-      <Nav pullRight>
-        <Navbar.Text>
-          user: {props.currentUser.email || 'Not Logged In'}
-        </Navbar.Text>
-        {props.currentUser.isApproved ? (
-          <NavItem eventKey={1} onClick={props.logoutUser}>
-            Logout
-          </NavItem>
-        ) : (
-          <Nav>
-            <NavItem href="/login">Log In</NavItem>
-            <NavItem href="/signup">Sign Up</NavItem>
-          </Nav>
+      <Navbar.Collapse>
+        <Nav pullRight>
+          {props.currentUser.isApproved ? (
+            <NavItem eventKey={1} onClick={props.logoutUser}>
+              Logout
+            </NavItem>
+          ) : (
+            <Nav>
+              <NavItem href="/login" eventKey={2}>
+                Log In
+              </NavItem>
+              <NavItem href="/signup" eventKey={3}>
+                Sign Up
+              </NavItem>
+            </Nav>
+          )}
+        </Nav>
+        {props.currentUser.email && (
+          <Navbar.Text pullRight>{props.currentUser.email}</Navbar.Text>
         )}
-      </Nav>
+      </Navbar.Collapse>
     </Navbar>
   )
 }
