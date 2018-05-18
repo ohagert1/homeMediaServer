@@ -1,25 +1,39 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 import { logoutCurrentUser } from '../store'
+import { Navbar, NavItem, Nav } from 'react-bootstrap'
 
-const Navbar = props => {
+const NavBar = props => {
   return (
-    <span>
-      <h2>user: {props.currentUser.email || 'Not Logged In'}</h2>
-      {props.currentUser.isApproved ? (
-        <div>
-          <Link to="" onClick={props.logoutUser}>
-            Logout
-          </Link>
-        </div>
-      ) : (
-        <div>
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Signup</Link>
-        </div>
-      )}
-    </span>
+    <Navbar inverse>
+      <Navbar.Header>
+        <Navbar.Brand>
+          <a href="">Ras Media</a>
+        </Navbar.Brand>
+        <Navbar.Toggle />
+      </Navbar.Header>
+      <Navbar.Collapse>
+        <Nav pullRight>
+          {props.currentUser.isApproved ? (
+            <NavItem eventKey={1} onClick={props.logoutUser}>
+              Logout
+            </NavItem>
+          ) : (
+            <Nav>
+              <NavItem href="/login" eventKey={2}>
+                Log In
+              </NavItem>
+              <NavItem href="/signup" eventKey={3}>
+                Sign Up
+              </NavItem>
+            </Nav>
+          )}
+        </Nav>
+        {props.currentUser.email && (
+          <Navbar.Text pullRight>{props.currentUser.email}</Navbar.Text>
+        )}
+      </Navbar.Collapse>
+    </Navbar>
   )
 }
 
@@ -33,4 +47,4 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(mapState, mapDispatch)(Navbar)
+export default connect(mapState, mapDispatch)(NavBar)

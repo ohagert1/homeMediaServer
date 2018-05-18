@@ -15,7 +15,6 @@ class Videos extends Component {
   }
 
   selectVideo(event) {
-    console.log('selectVideo')
     this.props.chooseVideo(event.target.id)
     this.props.history.push(event.target.id)
   }
