@@ -6,10 +6,8 @@
   "scripts": {
     "start": "node server",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-dev":
-      "NODE_ENV='development' npm run build-client-watch & npm run start-server",
-    "start-server":
-      "nodemon server -e html,js,scss --ignore public --ignore client",
+    "start-dev": "NODE_ENV='development' npm run build-client-watch & npm run start-server",
+    "start-server": "nodemon server -e html,js,scss --ignore public --ignore client",
     "build-client-watch": "webpack -w",
     "seed": "node seed.js"
   },
@@ -17,6 +15,7 @@
   "author": "OH",
   "license": "ISC",
   "dependencies": {
+    "@material-ui/core": "^1.0.0",
     "axios": "^0.18.0",
     "body-parser": "^1.18.2",
     "compression": "^1.7.2",
