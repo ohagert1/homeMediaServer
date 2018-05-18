@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchCurrentVideo, clearVideo } from '../store'
 import ReactPlayer from 'react-player'
-import { PageHeader } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 
 class SingleVideo extends Component {
   componentDidMount() {
@@ -23,6 +23,9 @@ class SingleVideo extends Component {
             <h3>{currentVideo.title}</h3>
             <ReactPlayer url={`/media/${currentVideo.url}`} controls={true} />
             <h5>{currentVideo.description}</h5>
+            <a href={`/media/${currentVideo.url}`} download>
+              <Button className="btn-primary col-lg-offset-7">Download</Button>
+            </a>
           </div>
         )}
       </div>
