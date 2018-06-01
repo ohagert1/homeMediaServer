@@ -5,9 +5,10 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import user from './user'
 import videos from './videos'
 import currentVideo from './currentVideo'
+import filter from './filter'
 import error from './error'
 
-const reducer = combineReducers({ user, videos, currentVideo, error })
+const reducer = combineReducers({ user, videos, currentVideo, filter, error })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
 )
@@ -17,4 +18,5 @@ export default store
 export * from './user'
 export * from './videos'
 export * from './currentVideo'
+export * from './filter'
 export * from './error'
