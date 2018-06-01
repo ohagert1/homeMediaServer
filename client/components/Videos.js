@@ -7,7 +7,7 @@ import { Table } from './'
 class Videos extends Component {
   constructor(props) {
     super(props)
-    this.filterVideos = this.filterVideos.bind(this)
+    this.searchVideos = this.searchVideos.bind(this)
     this.selectVideo = this.selectVideo.bind(this)
   }
 
@@ -15,17 +15,22 @@ class Videos extends Component {
     this.props.loadVideos()
   }
 
-  filterVideos() {
-    let search = this.props.filter.toLowerCase()
+  searchVideos() {
+    let search = this.props.searchTerm.toLowerCase()
+    let category = this.props.category
     let videos = this.props.videos
     if (!search.length) return videos
     let matches = []
     for (let i = 0; i < videos.length; i++) {
-      if (videos[i].title.toLowerCase() === search) {
+      let catMatch = videos[i].mediaType === category
+      if (videos[i].title.toLowerCase() === search && catMatch) {
         return [videos[i]]
-      } else if (videos[i].title.toLowerCase().includes(search)) {
+      } else if (videos[i].title.toLowerCase().includes(search) && catMatch) {
         matches.push(videos[i])
-      } else if (levenshtein.get(search, videos[i].title.toLowerCase()) < 5) {
+      } else if (
+        catMatch &&
+        levenshtein.get(search, videos[i].title.toLowerCase()) < 5
+      ) {
         matches.push(videos[i])
       }
     }
@@ -41,7 +46,7 @@ class Videos extends Component {
     return (
       <div>
         <Table
-          media={this.filterVideos(this.props.videos)}
+          media={this.searchVideos(this.props.videos)}
           mediaPath={'/media/videos'}
           clickHandle={this.selectVideo}
         />
@@ -53,7 +58,8 @@ class Videos extends Component {
 const mapState = state => {
   return {
     videos: state.videos,
-    filter: state.filter
+    searchTerm: state.search,
+    category: state.category
   }
 }
 
