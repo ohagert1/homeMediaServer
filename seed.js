@@ -1,18 +1,19 @@
 const fs = require('fs')
 const path = require('path')
-const { mediaPath, seedUser } = require('./secrets')
+const { seedDev, seedUser } = require('./secrets')
 const { Video, User } = require('./server/db/models')
 const db = require('./server/db')
 
 const supportedFileTypes = {
   '.mp4': true,
   '.avi': true,
-  '.mkv': true
+  '.mkv': true,
+  '.m4v': true
 }
 
 const media = []
 
-const pathToMedia = path.join(__dirname, mediaPath)
+const pathToMedia = path.join(__dirname, seedDev)
 
 const readMedia = (table, folder, arr, folderPath = '') => {
   fs.readdirSync(folder).forEach(file => {

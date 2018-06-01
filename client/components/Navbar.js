@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { logoutCurrentUser } from '../store'
-import { Navbar, NavItem, Nav } from 'react-bootstrap'
+import { Navbar, NavItem, Nav, FormGroup, FormControl } from 'react-bootstrap'
 
 const NavBar = props => {
   return (
@@ -11,6 +11,9 @@ const NavBar = props => {
           <a href="">Ras Media</a>
         </Navbar.Brand>
         <Navbar.Toggle />
+        <FormGroup>
+          <FormControl type="text" placeholder="Search" />
+        </FormGroup>{' '}
       </Navbar.Header>
       <Navbar.Collapse>
         <Nav pullRight>
