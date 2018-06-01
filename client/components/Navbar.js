@@ -1,39 +1,39 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { logoutCurrentUser } from '../store'
+import { logoutCurrentUser, setFilter } from '../store'
 import { Navbar, NavItem, Nav, FormGroup, FormControl } from 'react-bootstrap'
 
 const NavBar = props => {
   return (
-    <Navbar inverse>
+    <Navbar inverse fluid>
       <Navbar.Header>
-        <Navbar.Brand>
-          <a href="">Ras Media</a>
-        </Navbar.Brand>
+        <Navbar.Brand>RasMedia</Navbar.Brand>
         <Navbar.Toggle />
-        <FormGroup>
-          <FormControl type="text" placeholder="Search" />
-        </FormGroup>{' '}
       </Navbar.Header>
+      {props.currentUser.isApproved && (
+        <Navbar.Form pullLeft>
+          <FormGroup>
+            <FormControl
+              type="text"
+              placeholder="Search"
+              onChange={evt => {
+                props.filter(evt.target.value)
+              }}
+            />
+          </FormGroup>
+        </Navbar.Form>
+      )}
       <Navbar.Collapse>
-        <Nav pullRight>
-          {props.currentUser.isApproved ? (
-            <NavItem eventKey={1} onClick={props.logoutUser}>
-              Logout
-            </NavItem>
-          ) : (
-            <Nav>
-              <NavItem href="/login" eventKey={2}>
-                Log In
-              </NavItem>
-              <NavItem href="/signup" eventKey={3}>
-                Sign Up
-              </NavItem>
-            </Nav>
-          )}
-        </Nav>
-        {props.currentUser.email && (
-          <Navbar.Text pullRight>{props.currentUser.email}</Navbar.Text>
+        {props.currentUser.email ? (
+          <Nav pullRight>
+            <NavItem onClick={props.logoutUser}>logout</NavItem>
+            <Navbar.Text> user: {props.currentUser.email}</Navbar.Text>
+          </Nav>
+        ) : (
+          <Nav pullRight>
+            <NavItem href="/login">Log In</NavItem>
+            <NavItem href="/signup">Sign Up</NavItem>
+          </Nav>
         )}
       </Navbar.Collapse>
     </Navbar>
@@ -46,7 +46,8 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    logoutUser: () => dispatch(logoutCurrentUser())
+    logoutUser: () => dispatch(logoutCurrentUser()),
+    filter: search => dispatch(setFilter(search))
   }
 }
 

@@ -1,17 +1,35 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import levenshtein from 'fast-levenshtein'
 import { fetchVideos, fetchCurrentVideo } from '../store'
 import { Table } from './'
 
 class Videos extends Component {
   constructor(props) {
     super(props)
+    this.filterVideos = this.filterVideos.bind(this)
     this.selectVideo = this.selectVideo.bind(this)
   }
 
   componentDidMount() {
     this.props.loadVideos()
+  }
+
+  filterVideos() {
+    let search = this.props.filter.toLowerCase()
+    let videos = this.props.videos
+    if (!search.length) return videos
+    let matches = []
+    for (let i = 0; i < videos.length; i++) {
+      if (videos[i].title.toLowerCase() === search) {
+        return [videos[i]]
+      } else if (videos[i].title.toLowerCase().includes(search)) {
+        matches.push(videos[i])
+      } else if (levenshtein.get(search, videos[i].title.toLowerCase()) < 5) {
+        matches.push(videos[i])
+      }
+    }
+    return matches
   }
 
   selectVideo(event) {
@@ -23,7 +41,7 @@ class Videos extends Component {
     return (
       <div>
         <Table
-          media={this.props.videos}
+          media={this.filterVideos(this.props.videos)}
           mediaPath={'/media/videos'}
           clickHandle={this.selectVideo}
         />
@@ -34,7 +52,8 @@ class Videos extends Component {
 
 const mapState = state => {
   return {
-    videos: state.videos
+    videos: state.videos,
+    filter: state.filter
   }
 }
 

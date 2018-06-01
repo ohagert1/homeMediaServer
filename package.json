@@ -6,10 +6,8 @@
   "scripts": {
     "start": "node server",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-dev":
-      "NODE_ENV='development' npm run build-client-watch & npm run start-server",
-    "start-server":
-      "nodemon server -e html,js,scss --ignore public --ignore client",
+    "start-dev": "NODE_ENV='development' npm run build-client-watch & npm run start-server",
+    "start-server": "nodemon server -e html,js,scss --ignore public --ignore client",
     "build-client-watch": "webpack -w",
     "seed": "node seed.js",
     "convert": "node converter.js"
@@ -18,16 +16,15 @@
   "author": "OH",
   "license": "ISC",
   "dependencies": {
-    "@material-ui/core": "^1.0.0",
     "axios": "^0.18.0",
     "body-parser": "^1.18.2",
     "compression": "^1.7.2",
     "connect-session-sequelize": "^5.2.1",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
+    "fast-levenshtein": "^2.0.6",
     "handbrake-js": "^3.0.3",
     "helmet": "^3.12.0",
-    "material-ui": "^0.20.1",
     "morgan": "^1.9.0",
     "nodemon": "^1.17.3",
     "passport": "^0.4.0",
