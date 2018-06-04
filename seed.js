@@ -1,8 +1,9 @@
 const fs = require('fs')
 const path = require('path')
-const { seedDev, seedUser } = require('./secrets')
+const { seedDev, seedUser, moveToPath } = require('./secrets')
 const { Video, User } = require('./server/db/models')
 const db = require('./server/db')
+const handbrake = require('handbrake-js')
 
 const supportedFileTypes = {
   '.mp4': true,
@@ -15,7 +16,7 @@ const media = []
 
 const pathToMedia = path.join(__dirname, seedDev)
 
-const readMedia = (table, folder, arr, folderPath = '') => {
+const readMedia = async (table, folder, arr, folderPath = '') => {
   fs.readdirSync(folder).forEach(file => {
     let filePath = path.join(folder, file)
     var stats = fs.statSync(filePath)
@@ -27,12 +28,28 @@ const readMedia = (table, folder, arr, folderPath = '') => {
         folderPath.length ? folderPath + '/' + file : file
       )
     } else if (supportedFileTypes[path.extname(file)]) {
-      let vid = table.build({
-        url: `${folderPath.length ? folderPath + '/' : ''}${file}`,
-        title: file.slice(0, file.lastIndexOf('.')),
-        mediaType: file.includes('tv') ? 'tv' : 'film'
-      })
-      arr.push(vid)
+      let mediaType = file.includes('tv') ? 'tv' : 'film'
+      let output = moveToPath + mediaType === 'tv' ? '/tv/' : '/film/'
+      let title = file.slice(0, file.lastIndexOf('.'))
+      let url = output + title + '.mkv'
+      console.log(url)
+      console.log(output)
+      // handbrake
+      //   .spawn({ seedDev, output })
+      //   .on('error', err => {
+      //     console.log(err)
+      //   })
+      //   .on('progress', prog => {
+      //     console.log(`Progress: ${prog.percentComplete} \nETA: ${prog.eta}`)
+      //   })
+      //   .on('complete', () => {
+      //     let vid = table.build({
+      //       url,
+      //       title,
+      //       mediaType
+      //     })
+      //     arr.push(vid)
+      //   })
     }
   })
 }
