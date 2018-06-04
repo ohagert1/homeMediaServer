@@ -7,7 +7,7 @@ export const setCategory = category => {
   }
 }
 
-export default (state = '', action) => {
+export default (state = 'all', action) => {
   switch (action.type) {
     case SET_CATEGORY:
       return action.category

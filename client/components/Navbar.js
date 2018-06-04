@@ -65,7 +65,13 @@ class NavBar extends Component {
                   <ControlLabel>
                     <Navbar.Text>Category</Navbar.Text>
                   </ControlLabel>
-                  <FormControl componentClass="select" placeholder="all">
+                  <FormControl
+                    componentClass="select"
+                    placeholder="all"
+                    onChange={evt =>
+                      this.props.categoryFilter(evt.target.value)
+                    }
+                  >
                     <option value="all">All</option>
                     <option value="tv">Television</option>
                     <option value="film">Film</option>
@@ -75,8 +81,8 @@ class NavBar extends Component {
                   </ControlLabel>
                   <FormControl componentClass="select" placeholder="all">
                     <option value="all">All</option>
-                    <option value="placeholder1">Television</option>
-                    <option value="placeholder2">Film</option>
+                    <option value="placeholder1">placeholder1</option>
+                    <option value="placeholder2">placeholder2</option>
                   </FormControl>
                 </Nav>
               </Collapse>
