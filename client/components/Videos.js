@@ -9,7 +9,6 @@ class Videos extends Component {
   constructor(props) {
     super(props)
     this.search = this.search.bind(this)
-    //this.categoryFilter = this.categoryFilter.bind(this)
     this.selectVideo = this.selectVideo.bind(this)
   }
 
