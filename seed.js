@@ -16,7 +16,7 @@ const media = []
 
 const pathToMedia = path.join(__dirname, seedDev)
 
-const readMedia = async (table, folder, arr, folderPath = '') => {
+const readMedia = (table, folder, arr, folderPath = '') => {
   fs.readdirSync(folder).forEach(file => {
     let filePath = path.join(folder, file)
     var stats = fs.statSync(filePath)
@@ -29,27 +29,27 @@ const readMedia = async (table, folder, arr, folderPath = '') => {
       )
     } else if (supportedFileTypes[path.extname(file)]) {
       let mediaType = file.includes('tv') ? 'tv' : 'film'
-      let output = moveToPath + mediaType === 'tv' ? '/tv/' : '/film/'
       let title = file.slice(0, file.lastIndexOf('.'))
-      let url = output + title + '.mkv'
+      let url =
+        moveToPath + mediaType === 'tv' ? '/tv/' : '/film/' + title + '.mkv'
+      let vid = table.build({
+        url,
+        title,
+        mediaType
+      })
+      arr.push(vid)
       console.log(url)
-      console.log(output)
-      // handbrake
-      //   .spawn({ seedDev, output })
-      //   .on('error', err => {
-      //     console.log(err)
-      //   })
-      //   .on('progress', prog => {
-      //     console.log(`Progress: ${prog.percentComplete} \nETA: ${prog.eta}`)
-      //   })
-      //   .on('complete', () => {
-      //     let vid = table.build({
-      //       url,
-      //       title,
-      //       mediaType
-      //     })
-      //     arr.push(vid)
-      //   })
+      handbrake
+        .spawn({ seedDev, url })
+        .on('error', err => {
+          console.log(err)
+        })
+        .on('progress', prog => {
+          console.log(`Progress: ${prog.percentComplete} \nETA: ${prog.eta}`)
+        })
+        .on('complete', () => {
+          console.log('finished ' + title)
+        })
     }
   })
 }
