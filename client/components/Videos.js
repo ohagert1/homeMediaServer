@@ -17,12 +17,6 @@ class Videos extends Component {
     this.props.loadVideos()
   }
 
-  // categoryFilter() {
-  //   let category = this.props.category
-  //   let videos = this.props.videos
-  //   for (let i = 0; i < videos.length; i++) {}
-  // }
-
   search() {
     let search = this.props.searchTerm.toLowerCase()
     let category = this.props.category
