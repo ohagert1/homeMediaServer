@@ -31,7 +31,7 @@ class NavBar extends Component {
     return (
       <Navbar inverse fluid>
         <Navbar.Header>
-          <Navbar.Brand>RasMedia</Navbar.Brand>
+          <Navbar.Brand>NotFlix</Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
         {this.props.currentUser.isApproved && (
@@ -93,8 +93,8 @@ class NavBar extends Component {
         <Navbar.Collapse>
           {this.props.currentUser.email ? (
             <Nav pullRight>
-              <NavItem onClick={this.props.logoutUser}>logout</NavItem>
               <Navbar.Text> user: {this.props.currentUser.email}</Navbar.Text>
+              <NavItem onClick={this.props.logoutUser}>logout</NavItem>
             </Nav>
           ) : (
             <Nav pullRight>
@@ -120,4 +120,7 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(mapState, mapDispatch)(NavBar)
+export default connect(
+  mapState,
+  mapDispatch
+)(NavBar)
